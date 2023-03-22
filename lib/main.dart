@@ -33,11 +33,11 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  UserModel? userModel;
+  UserModel? userModel; // Global variable to store the user data. Can be null
 
   void getData(WidgetRef ref, User data) async {
     userModel = await ref
-        .read(authControllerProvider.notifier)
+        .watch(authControllerProvider.notifier)
         .getUserData(data.uid)
         .first;
 
@@ -55,7 +55,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         data: (data) => MaterialApp.router(
             debugShowCheckedModeBanner: false,
             title: 'Reddit Clone',
-            theme: Palette.lightModeAppTheme,
+            theme: Palette.darkModeAppTheme,
             routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
               if (data != null) {
                 getData(ref, data);
